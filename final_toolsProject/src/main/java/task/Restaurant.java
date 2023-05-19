@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -30,6 +31,9 @@ public class Restaurant implements Serializable {
     @JoinColumn(name = "owner_id")
     private User user;
     
+    @OneToMany(mappedBy="Restaurant")
+   private List<Order>orders= new ArrayList<>();
+    @OneToMany(mappedBy="restaurant")
     private List<Meal> meals = new ArrayList<>();
 
 

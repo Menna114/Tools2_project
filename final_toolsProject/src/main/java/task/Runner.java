@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -33,6 +34,7 @@ public class Runner implements Serializable {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private RunnerStatus status;
+    @OneToMany(mappedBy="Runner")
     
     void setName(String name)
 	{
