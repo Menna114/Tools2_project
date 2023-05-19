@@ -1,5 +1,7 @@
 package task;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,8 +13,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "runner")
-public class runner {
-
+public class Runner implements Serializable {
+	Runner()
+	{
+		
+	}
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -10,12 +10,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class user implements Serializable {
+public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	
 	@Column(name="ID") 
-	private long id;
+	private Long id;
 	
 	@Column(name="Role")
 	private String role;
@@ -24,7 +24,7 @@ public class user implements Serializable {
 	private String name;
 	
 	
-	user()
+	User()
 	{
 		
 	}	

@@ -5,10 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name = "meal")
-public class meal implements Serializable {
+public class Meal implements Serializable {
 	
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +22,12 @@ public class meal implements Serializable {
 
 	    @Column(name = "price")
 	    private double price;
-
-	    //missing fk_restaurantId
+        
+	    @ManyToOne
+	    @JoinColumn(name = "fk_restaurantId")
+	    private Restaurant restaurant; 
 	    
-	    meal()
+	    Meal()
 	    {
 	    	
 	    }
