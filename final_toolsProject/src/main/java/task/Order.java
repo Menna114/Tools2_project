@@ -37,7 +37,7 @@ public class Order  implements Serializable{
 		this.total_price=total_price;
 	}
 	
-	double getDelivery_Fees()
+	double gettotal_price()
 	{
 		return total_price;
 	}
