@@ -1,6 +1,7 @@
 package task;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,36 +25,53 @@ public class Runner implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+
     private String name;
     
-    @Column(name = "delivery_fees")
+    
     private double deliveryFees;
     
-    //missing status
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private RunnerStatus status;
-    @OneToMany(mappedBy="Runner")
     
-    void setName(String name)
+
+	@OneToMany(mappedBy="runner")
+	private Set<Orders>orders;
+    
+    public Set<Orders> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Orders> orders) {
+		this.orders = orders;
+	}
+
+	public void setName(String name)
 	{
 		this.name=name;
 	}
 	
-	String getName()
+	public String getName()
 	{
 		return name;
 	}
 	
-	void setDelivery_Fees(double deliveryFees)
+	public void setDeliveryFees(double deliveryFees)
 	{
 		this.deliveryFees=deliveryFees;
 	}
 	
-	double getDelivery_Fees()
+	public double getDeliveryFees()
 	{
 		return deliveryFees;
+	}
+	public RunnerStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RunnerStatus status) {
+		this.status = status;
 	}
     
     

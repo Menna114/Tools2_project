@@ -1,19 +1,8 @@
 package task;
 
 public enum OrderStatus {
-	PREPARING("preparing"),
-	DELIVERED("delivered"),
-	CANCELLED("cancelled");
+	PREPARING,
+	DELIVERED,
+	CANCELLED;
 	
-	
-	OrderStatus(String status)
-	{
-		this.status=status;
-	}
-	
-	private final String status;
-	
-	public String getStatus() {
-        return status;
-    }
 }

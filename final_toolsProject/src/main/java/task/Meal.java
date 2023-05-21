@@ -17,38 +17,51 @@ public class Meal implements Serializable {
 	    @Column(name="ID") 
 	    private Long id;
 
-	    @Column(name = "name")
+	   
 	    private String name;
 
-	    @Column(name = "price")
+	    
 	    private double price;
         
 	    @ManyToOne
 	    @JoinColumn(name = "fk_restaurantId")
-	    private Restaurant restaurant; 
+	    private Restaurant restaurantMeals; 
 	    
-	    Meal()
+	    public Meal()
 	    {
 	    	
 	    }
-	    void setName(String name)
+	    public Meal(double price, String name)
+	    {
+	    	this.price=price;
+	    	this.name=name;
+	    }
+	    public void setName(String name)
 		{
 			this.name=name;
 		}
 		
-		String getName()
+		public String getName()
 		{
 			return name;
 		}
 		
-		void setPrice(double price)
+		public void setPrice(double price)
 		{
 			this.price=price;
 		}
 		
-		double getPrice()
+		public double getPrice()
 		{
 			return price;
+		}
+		public void setRestaurantMeals(Restaurant restaurant)
+		{
+			this.restaurantMeals=restaurant;
+		}
+		public Restaurant getRestaurantMeals()
+		{
+			return restaurantMeals;
 		}
 		
 

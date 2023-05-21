@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,16 +15,17 @@ import javax.persistence.Table;
 public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
-	@Column(name="ID") 
 	private Long id;
 	
-	@Column(name="Role")
+	
 	private String role;
 	
-	@Column(name="Name")
+	
 	private String name;
 	
+	@OneToOne
+    @JoinColumn(name = "restaurantID")
+	private Restaurant OwnerId;
 	
 	User()
 	{

@@ -3,9 +3,11 @@ package task;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,17 +26,15 @@ public class Restaurant implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "name")
     private String name;
     
-    @OneToOne
-    @JoinColumn(name = "owner_id")
+    @OneToOne(mappedBy="OwnerId")
     private User user;
     
-    @OneToMany(mappedBy="Restaurant")
-   private List<Order>orders= new ArrayList<>();
-    @OneToMany(mappedBy="restaurant")
-    private List<Meal> meals = new ArrayList<>();
+    @OneToMany(mappedBy="restaurantOrders",fetch =FetchType.EAGER)
+    private Set<Orders>orders;
+    @OneToMany(mappedBy="restaurantMeals",fetch =FetchType.EAGER)
+    private List<Meal> meals;
 
 
 	public String getName() {
@@ -51,6 +51,14 @@ public class Restaurant implements Serializable {
 
 	public void setMeals(List<Meal> meals) {
 		this.meals = meals;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
