@@ -4,6 +4,9 @@ import task.Orders;
 import task.Runner;
 import task.RunnerStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -21,6 +24,7 @@ import javax.persistence.EntityManager;
 @Path("/runnerService")
 
 public class RunnerService {
+	private static final String Arraylist = null;
 	@PersistenceContext
 	private EntityManager entitymanger;
 	@POST
@@ -46,17 +50,26 @@ public class RunnerService {
 	@Path("getNumOfTrips")
 	public int getTotalNumberOfTrips(int id)
 	{
+		List<Integer> myList = new ArrayList<>();
 		TypedQuery<Runner>query=entitymanger.createQuery("SELECT runner FROM Runner runner WHERE runner.id =?1",Runner.class);
 		query.setParameter(1,id);
 		Runner runner=query.getSingleResult();
 		if(runner != null) 
 		{
+			for(int i=0;i<runner.getOrders().size();i++)
+			{
+			Orders[] orders = (Orders[])runner.getOrders().toArray();
+			
+				//if(orders[i].getStatus().equals()				
 			
 			return runner.getOrders().size();
+			}
+			
 			//Orders[] order= runner.getOrders().toArray();	
 		}
 		else
 			throw new NullPointerException("Error");
+		return id;
 
 	}
 
