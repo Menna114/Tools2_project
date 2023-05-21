@@ -27,27 +27,27 @@ public class User implements Serializable {
     @JoinColumn(name = "restaurantID")
 	private Restaurant OwnerId;
 	
-	User()
+	public User()
 	{
 		
 	}	
 	
-	void setName(String name)
+	public void setName(String name)
 	{
 		this.name=name;
 	}
 	
-	String getName()
+	public String getName()
 	{
 		return name;
 	}
 	
-	void setRole(String role)
+	public void setRole(String role)
 	{
 		this.role=role;
 	}
 	
-	String getRole()
+	public String getRole()
 	{
 		return role;
 	}

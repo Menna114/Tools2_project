@@ -63,7 +63,7 @@ public class RestaurantService {
 		
 		
 		
-		//return menuMeals;
+		return menuMeals;
 	}
 	
 	
