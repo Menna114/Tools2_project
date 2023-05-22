@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import task.OrderDetails;
 import task.Runner;
+import task.RunnerStatus;
 import task.User;
 
 @Stateless
@@ -33,9 +34,9 @@ public class UserServiceController {
 		
 	}
 	
-	@Path("AddNewUser")
+	@Path("AddNewUser/{deliveryFees}")
 	@POST
-	public String Signup(User user)
+	public String Signup(User user,@PathParam("deliveryFees")double deliveryFees)
 	{
 		TypedQuery<User>query=entityManager.createQuery("SELECT user FROM User user",User.class);
 		List<User>u=query.getResultList();
@@ -52,6 +53,14 @@ public class UserServiceController {
 			}
 			
 		}
+		if(user.getRole().equalsIgnoreCase("Runner"))
+        {
+            Runner r=new Runner();
+            r.setName(user.getName());
+            r.setDeliveryFees(deliveryFees);
+            r.setStatus(RunnerStatus.AVAILABLE);
+            entityManager.persist(r);
+        }
 		entityManager.persist(user);
 		return "Name signed up";
 	}
@@ -61,8 +70,7 @@ public class UserServiceController {
 	@GET
 	public String login(User user) {
 
-		TypedQuery<User> query = entityManager
-				.createQuery("SELECT u FROM User u WHERE u.name = :name and u.password =:password", User.class);
+		TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name and u.password =:password", User.class);
 		query.setParameter("name", user.getName());
 		query.setParameter("password", user.getPassword());
 		List<User> u = query.getResultList();
@@ -84,13 +92,21 @@ public class UserServiceController {
 		return users;
 		
 	}
-    
-    @Path("getrunner")
+    @Path("createOrder")
     @GET
-    public String returnsth()
+    public Runner createOrder(OrderDetails order)
     {
-    	
-		return "hi";
+    	Runner run=null;
+    	TypedQuery<Runner>query=entityManager.createQuery("SELECT runners FROM Runner runners",Runner.class);
+    	List<Runner>r=query.getResultList();
+    	for(int i=0;i<r.size();i++)
+    	{
+    		if(r.get(i).getStatus().equals(RunnerStatus.AVAILABLE))
+    		{
+    			 run=r.get(i);
+    		}
+    	}
+    	return run;
     }
     
     
