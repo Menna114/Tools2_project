@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 
 import task.Meal;
 import task.Restaurant;
+import task.User;
 import javax.ws.rs.core.MediaType;
 @Stateless
 @Consumes(MediaType.APPLICATION_JSON)
