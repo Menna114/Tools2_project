@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Table(name = "meal")
 public class Meal implements Serializable {
 	
+	
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name="ID") 

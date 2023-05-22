@@ -20,7 +20,7 @@ public class User implements Serializable {
 	
 	private String role;
 	
-	
+    private String password;
 	private String name;
 	
 	@OneToOne
@@ -50,6 +50,14 @@ public class User implements Serializable {
 	public String getRole()
 	{
 		return role;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -27,16 +28,57 @@ public class UserServiceController {
 	{
 		
 	}
+	
 	@Path("AddNewUser")
 	@POST
-	
-	public String addNewUser(User user)
+	public String Signup(User user)
 	{
+		TypedQuery<User>query=entityManager.createQuery("SELECT user FROM User user",User.class);
+		List<User>u=query.getResultList();
+		if(u.size()>0)
+		{
+			for(int i=0;i<u.size();i++) 
+			{
+				if(u.get(i).getName().equals(user.getName())&& u.get(i).getRole().equals(user.getRole()))
+				{
+					return "User exists";
+					
+				}
+				
+			}
+			
+		}
 		entityManager.persist(user);
-		return("Signed in successfully");
+		return "Name signed up";
 	}
 	
-    @Path("GetUsers")
+	
+    @Path("Login/{name}/{password}")
+    @GET
+    public String login(@PathParam("name")String name,@PathParam("password") String password)
+    {
+
+    	   TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
+    	   query.setParameter("name", name);
+    	   List<User> users = query.getResultList();
+
+    	   if (users.size() == 1) 
+    	 {
+    	      User user = users.get(0);
+    	      if (user.getPassword().equals(password)) 
+    	       {
+    	         return "login successfully";
+               }
+    	      
+         }
+
+    	   return "login failed";
+    }
+    
+    
+    
+    
+    @Path("getusers")
     @GET
 	public List<User>getAllUsers()
 	{
