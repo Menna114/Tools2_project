@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User implements Serializable {
 	
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -24,6 +23,8 @@ public class User implements Serializable {
 	
 	
 	private String name;
+	
+    private String password;
 	
 	@OneToOne
     @JoinColumn(name = "restaurantID")
@@ -54,8 +55,7 @@ public class User implements Serializable {
 		return role;
 	}
 
-<<<<<<< Updated upstream
-=======
+
 	public String getPassword() {
 		return password;
 	}
@@ -80,6 +80,4 @@ public class User implements Serializable {
 		OwnerId = ownerId;
 	}
 	
-
->>>>>>> Stashed changes
 }

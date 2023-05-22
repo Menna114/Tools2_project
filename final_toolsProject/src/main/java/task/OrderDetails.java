@@ -3,6 +3,7 @@ package task;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class OrderDetails {
 	
@@ -12,7 +13,7 @@ public class OrderDetails {
 	private double totalReceipt;
 	private String runnerName;
 	private String restaurantName;
-	private ArrayList<Meal> itemslist;
+	private Set<Meal> itemslist;
 	public LocalDateTime getDate() {
 		return date;
 	}
@@ -43,10 +44,10 @@ public class OrderDetails {
 	public void setRestaurantName(String restaurantName) {
 		this.restaurantName = restaurantName;
 	}
-	public ArrayList<Meal> getItemslist() {
+	public Set<Meal> getItemslist() {
 		return itemslist;
 	}
-	public void setItemslist(ArrayList<Meal> itemslist) {
+	public void setItemslist(Set<Meal> itemslist) {
 		this.itemslist = itemslist;
 	}
 	
@@ -55,11 +56,11 @@ public class OrderDetails {
 		itemslist=order.getMeals();
 		restaurantName=order.getRestaurantOrders().getName();
 		runnerName=order.getRunner().getName();
+		deliveryFees=order.getRunner().getDeliveryFees();
 		date=LocalDateTime.now();
 		totalReceipt= deliveryFees +order.Totalprice();
 		
 	}
-	
 	
 	public List<Object> ReturnMyRecipet() {
 		
