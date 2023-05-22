@@ -1,5 +1,6 @@
 package Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -10,10 +11,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import task.Runner;
 import task.User;
 
 @Stateless
@@ -23,18 +24,25 @@ import task.User;
 public class UserServiceController {
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+	List<User> u = new ArrayList <>();
 	public UserServiceController()
 	{
 		
 	}
-	
+<<<<<<< Updated upstream
 	@Path("AddNewUser")
 	@POST
-	public String Signup(User user)
+	
+	public String addNewUser(User user)
+	{
+=======
+	
+	@Path("AddNewUser/{deliveryFees}")
+	@POST
+	public String Signup(User user,@PathParam("deliveryFees")double deliveryFees)
 	{
 		TypedQuery<User>query=entityManager.createQuery("SELECT user FROM User user",User.class);
-		List<User>u=query.getResultList();
+		u=query.getResultList();
 		if(u.size()>0)
 		{
 			for(int i=0;i<u.size();i++) 
@@ -44,41 +52,21 @@ public class UserServiceController {
 					return "User exists";
 					
 				}
-				
 			}
-			
 		}
+		if(user.getRole().equalsIgnoreCase("Runner"))
+		{
+			Runner r=new Runner();
+			r.setName(user.getName());
+			r.setDeliveryFees(deliveryFees);
+	        entityManager.persist(r);
+		}
+>>>>>>> Stashed changes
 		entityManager.persist(user);
-		return "Name signed up";
+		return("Signed in successfully");
 	}
 	
-	
-    @Path("Login/{name}/{password}")
-    @GET
-    public String login(@PathParam("name")String name,@PathParam("password") String password)
-    {
-
-    	   TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
-    	   query.setParameter("name", name);
-    	   List<User> users = query.getResultList();
-
-    	   if (users.size() == 1) 
-    	 {
-    	      User user = users.get(0);
-    	      if (user.getPassword().equals(password)) 
-    	       {
-    	         return "login successfully";
-               }
-    	      
-         }
-
-    	   return "login failed";
-    }
-    
-    
-    
-    
-    @Path("getusers")
+    @Path("GetUsers")
     @GET
 	public List<User>getAllUsers()
 	{
@@ -86,5 +74,12 @@ public class UserServiceController {
 		List<User>users=query.getResultList();
 		return users;
 		
+	}
+    
+    @Path("getanything")
+    @GET
+	public String anything() 
+	{
+	 return "accessed";
 	}
 }

@@ -13,6 +13,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
+	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -20,7 +22,7 @@ public class User implements Serializable {
 	
 	private String role;
 	
-    private String password;
+	
 	private String name;
 	
 	@OneToOne
@@ -52,6 +54,8 @@ public class User implements Serializable {
 		return role;
 	}
 
+<<<<<<< Updated upstream
+=======
 	public String getPassword() {
 		return password;
 	}
@@ -59,5 +63,23 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Restaurant getOwnerId() {
+		return OwnerId;
+	}
+
+	public void setOwnerId(Restaurant ownerId) {
+		OwnerId = ownerId;
+	}
+	
+
+>>>>>>> Stashed changes
 }

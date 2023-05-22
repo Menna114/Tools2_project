@@ -63,7 +63,7 @@ public class RunnerService {
 			for(int i=0;i<runner.getOrders().size();i++)
 			{
 			   Orders[] orders = (Orders[])runner.getOrders().toArray();
-			   if(orders[i].getStatus().toString()=="DELIVERED")
+			   if(orders[i].getStatus().equals("DELIVERED"))
 			   {
 				   counter++;
 			   }

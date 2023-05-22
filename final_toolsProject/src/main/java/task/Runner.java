@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "runner")
 public class Runner implements Serializable {
-	Runner()
+	public Runner()
 	{
 		
 	}
