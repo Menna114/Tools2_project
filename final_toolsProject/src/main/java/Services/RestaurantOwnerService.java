@@ -26,7 +26,7 @@ public class RestaurantOwnerService {
 	@PersistenceContext
 	private EntityManager entityManager;
 	private UserServiceController usc;
-    @POST
+    /*@POST
     @Path("createMenu")
     public String createrestaurantMenu(Restaurant rest)
     {
@@ -40,8 +40,51 @@ public class RestaurantOwnerService {
         }
         entityManager.persist(rest);
         return "Restaurant created";
-    }
-    
+    }*/
+	@POST
+	@Path("createMenu")
+	public String createRestaurantAndMeals(Restaurant restaurant) {
+		TypedQuery<User> query = entityManager.createQuery("SELECT users FROM User users where users.id =:id",
+				User.class);
+
+		query.setParameter("id", restaurant.getUser().getId());
+
+		TypedQuery<Meal> query2 = entityManager.createQuery("SELECT meals FROM Meal meals", Meal.class);
+		List<Meal> restMenu = query2.getResultList();
+		User u = query.getSingleResult();
+
+		if (u != null) {
+			if (u.getRole().equalsIgnoreCase("owner")) {
+				for (int i = 0; i < restaurant.getMeals().size(); i++) {
+					Meal m = restaurant.getMeals().get(i);
+					Meal m2 = new Meal(m.getPrice(), m.getName());
+					m2.setRestaurantMeals(restaurant);
+					entityManager.persist(m2);
+					// if (!restMenu.contains(restaurant.getMeals().get(i))) {
+
+					// } else
+					// entityManager.merge(m2);
+				}
+				return "success";
+				// return "hey";
+				// }
+				// how can we solve transaction rolled back problem?
+
+				// u.setOwnerId(restaurant);
+				// restaurant.setUser(u);
+				// entityManager.merge(u);
+				// entityManager.persist(restaurant);
+				// } else
+				// throw new NullPointerException("user is not an owner");
+				// } else
+				// throw new NullPointerException("no such user");
+				// return "restaurant added";
+			}
+		}
+		return "no";
+
+	}
+
 	public void getRestaurantMenu(Restaurant rest)
 	{
 		TypedQuery<Restaurant>query= entityManager.createQuery("SELECT restaurant FROM Restaurant restaurant where restaurant.id=?1",Restaurant.class);

@@ -23,7 +23,7 @@ public class Restaurant implements Serializable {
     	
     }
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     private String name;
@@ -61,14 +61,13 @@ public class Restaurant implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public User getOwner() 
+	public User getUser() 
 	 {
 			return user;
 	 }
 
-     public void setOwner(User user) 
-     {
+    public void setUser(User user) 
+    {
 			this.user = user;
 	 }
-
 }

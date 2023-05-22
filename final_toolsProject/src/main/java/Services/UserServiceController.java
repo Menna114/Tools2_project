@@ -57,27 +57,23 @@ public class UserServiceController {
 	}
 	
 	
-    @Path("Login/{name}/{password}")
-    @GET
-    public String login(@PathParam("name")String name,@PathParam("password") String password)
-    {
+	@Path("Login")
+	@GET
+	public String login(User user) {
 
-    	   TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
-    	   query.setParameter("name", name);
-    	   List<User> users = query.getResultList();
+		TypedQuery<User> query = entityManager
+				.createQuery("SELECT u FROM User u WHERE u.name = :name and u.password =:password", User.class);
+		query.setParameter("name", user.getName());
+		query.setParameter("password", user.getPassword());
+		List<User> u = query.getResultList();
 
-    	   if (users.size() == 1) 
-    	 {
-    	      User user = users.get(0);
-    	      if (user.getPassword().equals(password)) 
-    	       {
-    	         return "login successfully";
-               }
-    	      
-         }
+		if (!u.isEmpty()) {
+			return "login successfully";
 
-    	   return "login failed";
-    }
+		}
+
+		return "login failed";
+	}
     
     @Path("getusers")
     @GET
@@ -97,13 +93,6 @@ public class UserServiceController {
 		return "hi";
     }
     
-    @Path("createOrder")
-	@POST
-	public OrderDetails createOrder(OrderDetails order)
-	{
-    	TypedQuery<Runner>query=entityManager.createQuery("SELECT runners FROM Runner runners WHERE runners.getStatud = :Available",Runner.class);
-    	List<Runner> runners=query.getResultList();
-    	return order;
-	}
+    
     
 }
