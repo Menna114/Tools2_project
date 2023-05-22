@@ -27,6 +27,7 @@ public class RunnerService {
 	private static final String Arraylist = null;
 	@PersistenceContext
 	private EntityManager entitymanger;
+	
 	@POST
 	@Path("markOrder")
 	public void markOrder(int id)
@@ -46,6 +47,7 @@ public class RunnerService {
 		entitymanger.merge(o);
 		
 	}
+	
 	@GET
 	@Path("getNumOfTrips")
 	public int getTotalNumberOfTrips(int id)

@@ -21,14 +21,20 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON) 
 @Path("/RestaurantServices")
 
-public class RestaurantService {
+public class RestaurantOwnerService {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 	@POST
 	@Path("createMenu")
 	
-	public List<Meal> createRestaurantMenu(Restaurant rest)
+	//public void createrestaurantMenu(Set<Meal> menuItems, Long ownerId)
+	//{
+		
+		//rest.setOwner();
+	//}
+	//creating menu
+	public void getRestaurantMenu(Restaurant rest)
 	{
 		TypedQuery<Restaurant>query= entityManager.createQuery("SELECT restaurant FROM Restaurant restaurant where restaurant.id=?1",Restaurant.class);
 		query.setParameter(1,rest.getId());
@@ -43,7 +49,7 @@ public class RestaurantService {
 		}
 		resturant.setMeals(rest.getMeals());
 		entityManager.merge(resturant);
-		return resturant.getMeals();
+		
 	
 	}
 	@POST

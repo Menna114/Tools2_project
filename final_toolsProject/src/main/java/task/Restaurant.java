@@ -31,7 +31,8 @@ public class Restaurant implements Serializable {
     @OneToOne(mappedBy="OwnerId")
     private User user;
     
-    @OneToMany(mappedBy="restaurantOrders",fetch =FetchType.EAGER)
+   
+	@OneToMany(mappedBy="restaurantOrders",fetch =FetchType.EAGER)
     private Set<Orders>orders;
     @OneToMany(mappedBy="restaurantMeals",fetch =FetchType.EAGER)
     private List<Meal> meals;
@@ -60,5 +61,14 @@ public class Restaurant implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public User getOwner() 
+	 {
+			return user;
+	 }
+
+     public void setOwner(User user) 
+     {
+			this.user = user;
+	 }
 
 }
