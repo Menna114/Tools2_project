@@ -7,6 +7,7 @@ import task.RunnerStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -27,7 +28,7 @@ public class RunnerService {
 	private static final String Arraylist = null;
 	@PersistenceContext
 	private EntityManager entitymanger;
-	
+	@RolesAllowed("runner")
 	@POST
 	@Path("markOrder")
 	public void markOrder(int id)
@@ -47,7 +48,7 @@ public class RunnerService {
 		entitymanger.merge(o);
 		
 	}
-	
+	@RolesAllowed({"runner","admin"})
 	@GET
 	@Path("getNumOfTrips")
 	public int getTotalNumberOfTrips(int id)

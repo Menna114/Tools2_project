@@ -3,6 +3,7 @@ package Services;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-
+import task.User;
 import task.Meal;
 import task.Restaurant;
 import javax.ws.rs.core.MediaType;
@@ -41,6 +42,7 @@ public class RestaurantOwnerService {
         entityManager.persist(rest);
         return "Restaurant created";
     }*/
+	@RolesAllowed("owner")
 	@POST
 	@Path("createMenu")
 	public String createRestaurantAndMeals(Restaurant restaurant) {
@@ -102,6 +104,7 @@ public class RestaurantOwnerService {
 		
 	
 	}
+	@RolesAllowed("owner")
 	@POST
 	@Path("editMenu")
 	public List<Meal> editRestaurantMenu(Restaurant rest)

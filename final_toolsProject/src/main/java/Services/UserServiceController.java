@@ -3,6 +3,7 @@ package Services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,7 +33,7 @@ public class UserServiceController {
 	{
 		
 	}
-	
+	@PermitAll
 	@Path("AddNewUser")
 	@POST
 	public String Signup(User user)
@@ -56,7 +57,7 @@ public class UserServiceController {
 		return "Name signed up";
 	}
 	
-	
+	@PermitAll
 	@Path("Login")
 	@GET
 	public String login(User user) {
@@ -74,7 +75,7 @@ public class UserServiceController {
 
 		return "login failed";
 	}
-    
+    @PermitAll
     @Path("getusers")
     @GET
 	public List<User>getAllUsers()
@@ -84,7 +85,7 @@ public class UserServiceController {
 		return users;
 		
 	}
-    
+    @PermitAll
     @Path("getrunner")
     @GET
     public String returnsth()
