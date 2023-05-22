@@ -11,9 +11,11 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import task.OrderDetails;
 import task.Runner;
 import task.User;
 
@@ -24,25 +26,19 @@ import task.User;
 public class UserServiceController {
 	@PersistenceContext
 	private EntityManager entityManager;
-	List<User> u = new ArrayList <>();
+	List<User>u =new ArrayList<>();
+	
 	public UserServiceController()
 	{
 		
 	}
-<<<<<<< Updated upstream
+	
 	@Path("AddNewUser")
 	@POST
-	
-	public String addNewUser(User user)
-	{
-=======
-	
-	@Path("AddNewUser/{deliveryFees}")
-	@POST
-	public String Signup(User user,@PathParam("deliveryFees")double deliveryFees)
+	public String Signup(User user)
 	{
 		TypedQuery<User>query=entityManager.createQuery("SELECT user FROM User user",User.class);
-		u=query.getResultList();
+		List<User>u=query.getResultList();
 		if(u.size()>0)
 		{
 			for(int i=0;i<u.size();i++) 
@@ -52,21 +48,38 @@ public class UserServiceController {
 					return "User exists";
 					
 				}
+				
 			}
+			
 		}
-		if(user.getRole().equalsIgnoreCase("Runner"))
-		{
-			Runner r=new Runner();
-			r.setName(user.getName());
-			r.setDeliveryFees(deliveryFees);
-	        entityManager.persist(r);
-		}
->>>>>>> Stashed changes
 		entityManager.persist(user);
-		return("Signed in successfully");
+		return "Name signed up";
 	}
 	
-    @Path("GetUsers")
+	
+    @Path("Login/{name}/{password}")
+    @GET
+    public String login(@PathParam("name")String name,@PathParam("password") String password)
+    {
+
+    	   TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
+    	   query.setParameter("name", name);
+    	   List<User> users = query.getResultList();
+
+    	   if (users.size() == 1) 
+    	 {
+    	      User user = users.get(0);
+    	      if (user.getPassword().equals(password)) 
+    	       {
+    	         return "login successfully";
+               }
+    	      
+         }
+
+    	   return "login failed";
+    }
+    
+    @Path("getusers")
     @GET
 	public List<User>getAllUsers()
 	{
@@ -76,10 +89,21 @@ public class UserServiceController {
 		
 	}
     
-    @Path("getanything")
+    @Path("getrunner")
     @GET
-	public String anything() 
+    public String returnsth()
+    {
+    	
+		return "hi";
+    }
+    
+    @Path("createOrder")
+	@POST
+	public OrderDetails createOrder(OrderDetails order)
 	{
-	 return "accessed";
+    	TypedQuery<Runner>query=entityManager.createQuery("SELECT runners FROM Runner runners WHERE runners.getStatud = :Available",Runner.class);
+    	List<Runner> runners=query.getResultList();
+    	return order;
 	}
+    
 }
