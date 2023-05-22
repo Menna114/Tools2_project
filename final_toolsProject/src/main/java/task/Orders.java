@@ -1,15 +1,19 @@
 package task;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 @Entity
 public class Orders implements Serializable{
 	
@@ -18,7 +22,9 @@ public class Orders implements Serializable{
 	@Column(name="ID") 
 	private Long id;
 	
-	private ArrayList<Meal> meals = new ArrayList<>();
+	
+	@OneToMany(mappedBy="OrderMeals", fetch=FetchType.EAGER)
+	private Set<Meal> meals ;
 	
 	
 	private double totalPrice;
@@ -41,7 +47,8 @@ public class Orders implements Serializable{
     	
     	for(int i =0;i<meals.size();i++)
     	{
-    		totalPrice=meals.get(i).getPrice()+totalPrice;
+    		Meal[]Meals=(Meal[])meals.toArray();
+    		totalPrice=Meals[i].getPrice()+totalPrice;
     		
     	}
     	return totalPrice;
@@ -73,11 +80,11 @@ public class Orders implements Serializable{
 		return runner;
 	}
 
-	public ArrayList<Meal> getMeals() {
+	public Set<Meal> getMeals() {
 		return meals;
 	}
 
-	public void setMeals(ArrayList<Meal> meals) {
+	public void setMeals(Set<Meal> meals) {
 		this.meals = meals;
 	}
 	public OrderStatus getStatus() {

@@ -19,7 +19,10 @@ public class Meal implements Serializable {
 
 	   
 	    private String name;
-
+        
+	    @ManyToOne
+	    @JoinColumn(name="fk_orders")
+	    private Orders OrderMeals;
 	    
 	    private double price;
         

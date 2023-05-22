@@ -54,22 +54,22 @@ public class RunnerService {
 		TypedQuery<Runner>query=entitymanger.createQuery("SELECT runner FROM Runner runner WHERE runner.id =?1",Runner.class);
 		query.setParameter(1,id);
 		Runner runner=query.getSingleResult();
+		int counter=0;
 		if(runner != null) 
 		{
+			
 			for(int i=0;i<runner.getOrders().size();i++)
 			{
-			Orders[] orders = (Orders[])runner.getOrders().toArray();
-			
-				//if(orders[i].getStatus().equals()				
-			
-			return runner.getOrders().size();
+			   Orders[] orders = (Orders[])runner.getOrders().toArray();
+			   if(orders[i].getStatus().toString()=="DELIVERED")
+			   {
+				   counter++;
+			   }
 			}
-			
-			//Orders[] order= runner.getOrders().toArray();	
 		}
 		else
 			throw new NullPointerException("Error");
-		return id;
+		return counter;
 
 	}
 

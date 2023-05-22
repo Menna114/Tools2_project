@@ -38,7 +38,6 @@ public class RestaurantService {
 			if(entityManager.contains(rest.getMeals().get(i)))
 				continue;
 			else
-				
 				entityManager.persist(rest.getMeals().get(i));	
 		}
 		resturant.setMeals(rest.getMeals());
