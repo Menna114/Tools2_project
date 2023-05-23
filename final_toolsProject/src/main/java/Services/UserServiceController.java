@@ -48,12 +48,9 @@ public class UserServiceController {
 			{
 				if(u.get(i).getName().equals(user.getName())&& u.get(i).getRole().equals(user.getRole()))
 				{
-					return "User exists";
-					
+					return "User exists";	
 				}
-				
 			}
-			
 		}
 		if(user.getRole().equalsIgnoreCase("Runner"))
         {
@@ -68,11 +65,13 @@ public class UserServiceController {
 	}
 	
 	
+	
 	@Path("Login")
 	@GET
 	public String login(User user) {
 
-		TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.name = :name and u.password =:password", User.class);
+		TypedQuery<User> query = entityManager
+				.createQuery("SELECT u FROM User u WHERE u.name = :name and u.password =:password", User.class);
 		query.setParameter("name", user.getName());
 		query.setParameter("password", user.getPassword());
 		List<User> u = query.getResultList();
@@ -92,7 +91,6 @@ public class UserServiceController {
 		TypedQuery<User>query=entityManager.createQuery("SELECT users FROM User users",User.class);
 		List<User>users=query.getResultList();
 		return users;
-		
 	}
     
     

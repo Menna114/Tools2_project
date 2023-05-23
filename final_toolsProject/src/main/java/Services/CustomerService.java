@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.Order;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -36,29 +37,31 @@ public class CustomerService {
 	
 	@Path("createOrder")
     @POST
-    public OrderDetails createOrder(OrderDetails order)
+    public Orders createOrder(Orders order)
     {
     	TypedQuery<Runner>query=entityManager.createQuery("SELECT runners FROM Runner runners",Runner.class);
     	List<Runner>r=query.getResultList();
     	double totalPrice=0;
+    	OrderDetails ord=new OrderDetails(order);
     	for(int i=0;i<r.size();i++)
     	{
     		if(r.get(i).getStatus().equals(RunnerStatus.AVAILABLE))
     		{
-    			 order.setRunnerName(r.get(i).getName());
+    			 ord.setRunnerName(r.get(i).getName());
     			 r.get(i).setStatus(RunnerStatus.BUSY);
     			 entityManager.merge(r);
     			 break;
     		}
     	}
-    	for(int i=0;i<order.getItemslist().size();i++)
+    	for(int i=0;i<ord.getItemslist().size();i++)
     	{
-    		Meal[]items=(Meal[])order.getItemslist().toArray();
+    		Meal[]items=(Meal[])ord.getItemslist().toArray();
     		totalPrice=totalPrice+ items[i].getPrice();
     	}
-    	double Total=totalPrice+order.getDeliveryFees();
-    	order.setTotalReceipt(Total);
+    	double Total=totalPrice+ord.getDeliveryFees();
+    	ord.setTotalReceipt(Total);
     	entityManager.persist(order);
+    	
     	return order;
     }
 	
@@ -71,7 +74,7 @@ public class CustomerService {
 		return rest;
 	
 	}
-	
+
 	@Path("EditOrder")
 	@PUT
 	public void editOrder(Orders order)

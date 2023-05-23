@@ -14,6 +14,9 @@ public class OrderDetails {
 	private String runnerName;
 	private String restaurantName;
 	private Set<Meal> itemslist;
+	
+	public OrderDetails() {}
+	
 	public LocalDateTime getDate() {
 		return date;
 	}
