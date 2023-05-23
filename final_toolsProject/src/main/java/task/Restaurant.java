@@ -12,30 +12,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Restaurant implements Serializable {
 	
-    Restaurant()
-    {
-    	
-    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
     
-    private String name;
+    protected String name;
     
     @OneToOne(mappedBy="OwnerId")
     private User user;
     
    
-	@OneToMany(mappedBy="restaurantOrders",fetch =FetchType.EAGER)
+	@OneToMany(mappedBy="restaurantOrders")
     private Set<Orders>orders;
-    @OneToMany(mappedBy="restaurantMeals",fetch =FetchType.EAGER)
+    @OneToMany(mappedBy="restaurantMeals")
     private List<Meal> meals;
+    
+    @Lob
+    protected ArrayList<Meal>mealsList = new ArrayList<Meal>();
 
 
 	public String getName() {
