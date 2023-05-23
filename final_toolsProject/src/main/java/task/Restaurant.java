@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,9 +31,11 @@ public class Restaurant implements Serializable {
     private User user;
     
    
-	@OneToMany(mappedBy="restaurantOrders")
+	@OneToMany(mappedBy="restaurantOrders",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Orders>orders;
-    @OneToMany(mappedBy="restaurantMeals")
+	
+    
+	@OneToMany(mappedBy="restaurantMeals")
     private List<Meal> meals;
     
     @Lob
@@ -47,14 +50,6 @@ public class Restaurant implements Serializable {
 		this.name = name;
 	}
 
-	public List<Meal> getMeals() {
-		return meals;
-	}
-
-	public void setMeals(List<Meal> meals) {
-		this.meals = meals;
-	}
-	
 	public Long getId() {
 		return id;
 	}
@@ -62,13 +57,21 @@ public class Restaurant implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public User getUser() 
-	 {
-			return user;
-	 }
+	public ArrayList<Meal> getMealsList() {
+		return mealsList;
+	}
 
-    public void setUser(User user) 
-    {
-			this.user = user;
-	 }
+	public void setMealsList(ArrayList<Meal> mealsList) {
+		this.mealsList = mealsList;
+	}
+
+//	public User getUser() 
+//	 {
+//			return user;
+//	 }
+//
+//    public void setUser(User user) 
+//    {
+//			this.user = user;
+//	 }
 }

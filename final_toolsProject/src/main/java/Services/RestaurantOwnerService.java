@@ -1,5 +1,6 @@
 package Services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,7 +11,9 @@ import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import task.Meal;
@@ -26,76 +29,47 @@ public class RestaurantOwnerService {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
-	private UserServiceController usc;
-    /*@POST
-    @Path("createMenu")
-    public String createrestaurantMenu(Restaurant rest)
-    {
-        for(int i=0;i<usc.u.size();i++)
-        {
-           if(usc.u.get(i).getRole().equalsIgnoreCase("Owner"))
-           {
-               Long id = usc.u.get(i).getId();
-               rest.setId(id);
-           }
-        }
-        entityManager.persist(rest);
-        return "Restaurant created";
-    }*/
+	
 	@POST
 	@Path("createMenu")
-	public String createRestaurantAndMeals(Restaurant restaurant) 
+	public String createRestaurant(Restaurant restaurant) 
 	{
-		TypedQuery<Restaurant>query= entityManager.createQuery("SELECT restaurant FROM Restaurant restaurant where restaurant.id=?1",Restaurant.class);
-		query.setParameter(1,restaurant.getId());
-		Restaurant r=query.getSingleResult();
-		for(int i=0;i<r.getMeals().size();i++)
-		{
-			if(entityManager.contains(restaurant.getMeals().get(i)))
-				continue;
-			else
-				entityManager.persist(restaurant.getMeals().get(i));	
-		}
-		return "added";
+
+		entityManager.persist(restaurant);
+		return "rest created";
 
 	}
 	
-	//public Restaurant editRestaurantDetails()
-
-	public void getRestaurantMenu(Restaurant rest)
+	@GET
+	@Path("getList")
+	public List<Restaurant>listofRes()
 	{
-		TypedQuery<Restaurant>query= entityManager.createQuery("SELECT restaurant FROM Restaurant restaurant where restaurant.id=?1",Restaurant.class);
-		query.setParameter(1,rest.getId());
-		Restaurant resturant=query.getSingleResult();
-		for(int i=0;i<rest.getMeals().size();i++)
-		{
-			if(entityManager.contains(rest.getMeals().get(i)))
-				continue;
-			else
-				entityManager.persist(rest.getMeals().get(i));	
-		}
-		resturant.setMeals(rest.getMeals());
-		entityManager.merge(resturant);
-		
-	
+		TypedQuery<Restaurant>query=entityManager.createQuery("SELECT r FROM Restaurant r",Restaurant.class);
+     	List<Restaurant> r=query.getResultList();
+     	return r;
 	}
+	
 	@POST
-	@Path("editMenu")
-	public List<Meal> editRestaurantMenu(Restaurant rest)
-	{
-		TypedQuery<Restaurant>query= entityManager.createQuery("SELECT restaurant FROM Restaurant restaurant where restaurant.id=?1",Restaurant.class);
-		query.setParameter(1,rest.getId());
-		Restaurant resturant=query.getSingleResult();
-		
-		List<Meal>menuMeals=resturant.getMeals();
-		
-		for(Meal meal:menuMeals)
-		{
-			entityManager.remove(meal);
-		}
-		
-		return menuMeals;
-	}
+	@Path("getMenu/{restaurantId}")
+	public String createMeal(@PathParam("restaurantId") long restaurantId,List<Meal>meals) {
+        // Find the restaurant with the given id
+        Restaurant restaurant = entityManager.find(Restaurant.class, restaurantId);
+        return "hey";
+        
+//        List<Meal> m = new ArrayList<>();
+//        for (Meal mealRequest : meals) {
+//            Meal meal = new Meal();
+//            meal.setName(mealRequest.getName());
+//            meal.setPrice(mealRequest.getPrice());
+//            meal.setRestaurantMeals(restaurant);
+//            m.add(meal);
+//        }
+//        restaurant.getMealsList().addAll(m);
+//        entityManager.persist(m);
+//        entityManager.merge(restaurant);
+//		return "done";
+    }
+
 	
 	@GET
 	@Path("restaurantDetails")
@@ -107,16 +81,48 @@ public class RestaurantOwnerService {
 		return restaurant;
 	}
 	
+
+	
+	@Path("EditMenu/{restID}")
+    @PUT
+	public void updateMeal(@PathParam("restID")long restID, Meal meals) {
+		
+		Restaurant restaurant= entityManager.find(Restaurant.class, restID);
+		
+ 
+        Meal meal = null; 
+        for (Meal m : restaurant.getMealsList()) {
+            if (m.getId().equals(meals.getId())) {
+                meal = m;
+                break;
+            }
+        }
+
+      
+        if (meal != null) {
+            meal.setName(meals.getName());
+            meal.setPrice(meals.getPrice());
+            entityManager.merge(meal); // Update the meal in the database
+        }
+        else
+        	throw new NullPointerException("No item exists");
+        
+    }
+
+}
+
+	
+	
+	
 //	public Report getRestaurantReport(int id)
 //	{
 //		TypedQuery<Restaurant>query=entityManager.createQuery("SELECT rest FROM Restaurant rest WHERE rest.id:id",Restaurant.class);
 //		query.setParameter("id", id);
 //		List<Res>
 //	}
+//	
 	
 	
 	
 	
-	//public Restaurant editRestMenu 
 
-}

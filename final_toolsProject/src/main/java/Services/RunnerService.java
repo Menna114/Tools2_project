@@ -28,6 +28,8 @@ public class RunnerService {
 	@PersistenceContext
 	private EntityManager entitymanger;
 	
+	
+	
 	@POST
 	@Path("markOrder")
 	public void markOrder(int id)
@@ -74,5 +76,6 @@ public class RunnerService {
 		return counter;
 
 	}
+	
 
 }

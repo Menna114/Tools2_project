@@ -19,7 +19,11 @@ public class Meal implements Serializable {
 	    private Long id;
 
 	   
-	    private String name;
+	    public Long getId() {
+			return id;
+		}
+		
+		private String name;
         
 	    @ManyToOne
 	    @JoinColumn(name="fk_orders")
