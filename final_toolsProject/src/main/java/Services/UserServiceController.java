@@ -3,6 +3,7 @@ package Services;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,6 +39,7 @@ public class UserServiceController {
 	
 	@Path("AddNewUser/{deliveryFees}")
 	@POST
+	//@PermitAll
 	public String Signup(User user,@PathParam("deliveryFees")double deliveryFees)
 	{
 		TypedQuery<User>query=entityManager.createQuery("SELECT user FROM User user",User.class);
@@ -68,6 +70,7 @@ public class UserServiceController {
 	
 	@Path("Login")
 	@GET
+	//@PermitAll
 	public String login(User user) {
 
 		TypedQuery<User> query = entityManager
@@ -86,6 +89,7 @@ public class UserServiceController {
     
     @Path("getusers")
     @GET
+    //@PermitAll
 	public List<User>getAllUsers()
 	{
 		TypedQuery<User>query=entityManager.createQuery("SELECT users FROM User users",User.class);

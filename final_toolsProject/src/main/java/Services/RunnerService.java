@@ -30,6 +30,7 @@ public class RunnerService {
 	
 	@POST
 	@Path("markOrder")
+	//@RolesAllowed("runner")
 	public void markOrder(int id)
 	
 	{
@@ -50,6 +51,7 @@ public class RunnerService {
 	
 	@GET
 	@Path("getNumOfTrips")
+	//@RolesAllowed("runner")
 	public int getTotalNumberOfTrips(int id)
 	{
 		List<Integer> myList = new ArrayList<>();
