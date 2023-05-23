@@ -23,6 +23,14 @@ public class Orders implements Serializable{
 	private Long id;
 	
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@OneToMany(mappedBy="OrderMeals", fetch=FetchType.EAGER)
 	private Set<Meal> meals ;
 	

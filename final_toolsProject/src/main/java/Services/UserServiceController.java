@@ -15,7 +15,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import task.Meal;
 import task.OrderDetails;
+import task.Orders;
 import task.Runner;
 import task.RunnerStatus;
 import task.User;
@@ -92,22 +94,6 @@ public class UserServiceController {
 		return users;
 		
 	}
-    @Path("createOrder")
-    @GET
-    public Runner createOrder(OrderDetails order)
-    {
-    	Runner run=null;
-    	TypedQuery<Runner>query=entityManager.createQuery("SELECT runners FROM Runner runners",Runner.class);
-    	List<Runner>r=query.getResultList();
-    	for(int i=0;i<r.size();i++)
-    	{
-    		if(r.get(i).getStatus().equals(RunnerStatus.AVAILABLE))
-    		{
-    			 run=r.get(i);
-    		}
-    	}
-    	return run;
-    }
     
     
     
